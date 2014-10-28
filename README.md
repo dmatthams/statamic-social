@@ -14,7 +14,7 @@ By default it will show all available social buttons but you can filter it down 
 
 Counters show as default but you can turn them off with:
 
-	{{ social show=“facebook|twitter” count=“false” }}
+	{{ social show=“facebook|twitter” counter=“false” }}
 
 ## Todo
 
