@@ -14,7 +14,7 @@ class Plugin_social extends Plugin {
     
     // Parameters
     $show 			= $this->fetch('show');
-    $url  			= $this->fetch('url','{{permalink}}');
+    $url            = $this->fetch('url', URL::tidy(Config::getSiteURL() . '/' . URL::getCurrent()));
     $showcounter 	= $this->fetch('count','true');
 
     $items = explode("|", $show);
