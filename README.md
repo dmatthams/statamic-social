@@ -16,6 +16,10 @@ Counters show as default but you can turn them off with:
 
 	{{ social show=“facebook|twitter” counter=“false” }}
 
+You can alse overide the url if needed:
+
+	{{ social show=“facebook|twitter” url=“http://google.com” }}
+
 ## Todo
 
 * Add option to change button size
