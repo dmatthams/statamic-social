@@ -4,7 +4,7 @@ class Plugin_social extends Plugin {
 
   var $meta = array(
     'name'        => 'Social',
-    'version'     => '0.1',
+    'version'     => '0.1.1',
     'author'      => 'David Matthams',
     'author_url'  => 'http://dmatthams.co.uk'
   );
@@ -13,7 +13,7 @@ class Plugin_social extends Plugin {
   public function index() {
     
     // Parameters
-    $show           = $this->fetchParam('show', "facebook|twitter|pinterest|linkedin|google");
+    $show           = $this->fetchParam('show', "facebook_share|facebook_like|twitter|pinterest|linkedin|google");
     $url            = $this->fetchParam('url', URL::tidy(Config::getSiteURL() . '/' . URL::getCurrent()));
     $showcounter    = $this->fetchParam('counter','true');
 
@@ -23,7 +23,12 @@ class Plugin_social extends Plugin {
 
     foreach ($items as $key => $value) {
 
-        if ($value == "facebook") {
+
+         if ($value =="facebook_like" || "facebook_share"){
+            $html .= "<div id='fb-root'></div><script>(function(d, s, id) {  var js, fjs = d.getElementsByTagName(s)[0];  if (d.getElementById(id)) return;  js = d.createElement(s); js.id = id;  js.src = '//connect.facebook.net/de_DE/sdk.js#xfbml=1&version=v2.0';  fjs.parentNode.insertBefore(js, fjs);}(document, 'script', 'facebook-jssdk'));</script>";
+        }
+
+        if ($value == "facebook_share") {
             if ($showcounter == 'true') { 
                 $layout = 'button_count'; 
                 $width = '90';
@@ -31,7 +36,14 @@ class Plugin_social extends Plugin {
                 $layout = 'button'; 
                 $width = '55';
             }
-            $html .= '<iframe src="//www.facebook.com/plugins/like.php?href='.$url.'&amp;width=&amp;layout='. $layout .'&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=20" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:20px; width:'.$width.'px" allowTransparency="true"></iframe>';
+            $html .= "<div class='fb-share-button' data-href='". $url ."' data-width='". $width ."' data-layout='". $layout ."'></div>";
+        } elseif ($value == "facebook_like") {
+            if ($showcounter == 'true') { 
+                $layout = 'button_count'; 
+            } else {
+                $layout = 'button'; 
+            }
+            $html .= "<style>.fb_iframe_widget span {overflow: visible!important;width: 450px!important;}</style><div class='fb-like' data-href='". $url ."' data-layout='". $layout ."' data-action='like' data-show-faces='false' data-share='false'></div>";
         } elseif ($value == "twitter") {
             if ($showcounter == 'true') { 
                 $layout = ""; 
